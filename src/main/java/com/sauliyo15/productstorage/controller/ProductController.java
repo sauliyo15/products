@@ -2,6 +2,7 @@ package com.sauliyo15.productstorage.controller;
 
 import com.sauliyo15.productstorage.model.Product;
 import com.sauliyo15.productstorage.service.ProductService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -12,6 +13,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.concurrent.CompletableFuture;
 
+@Slf4j
 @RestController
 @RequestMapping("/products")
 public class ProductController {
@@ -26,6 +28,7 @@ public class ProductController {
             return productService.getAllProducts().thenApply(ResponseEntity::ok);
         }
         catch (Exception e) {
+            log.error("Error fetching products: ", e);
             List<Product> emptyList = new ArrayList<>();
             return CompletableFuture.completedFuture(ResponseEntity.ok(emptyList));
 
